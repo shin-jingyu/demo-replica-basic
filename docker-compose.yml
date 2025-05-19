@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  master:
+    image: postgres:14
+    container_name: pg-master
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - ./master/postgres.conf:/etc/postgresql/postgresql.conf
+      - pg_master_data:/var/lib/postgresql/data
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+
+  replica:
+    image: postgres:14
+    container_name: pg-replica
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    depends_on:
+      - master
+    volumes:
+      - ./replica/postgres.conf:/etc/postgresql/postgresql.conf
+      - pg_replica_data:/var/lib/postgresql/data
+    command: >
+      bash -c "
+        until pg_isready -h master -p 5432; do sleep 1; done &&
+        rm -rf /var/lib/postgresql/data/* &&
+        pg_basebackup -h master -D /var/lib/postgresql/data -U postgres -Fp -Xs -P -R &&
+        postgres -c config_file=/etc/postgresql/postgresql.conf
+      "
+
+volumes:
+  pg_master_data:
+  pg_replica_data:
