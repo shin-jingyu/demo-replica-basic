@@ -1,4 +1,7 @@
 package com.replica.simple.usecase;
 
-public class ReadOneUseCase {
+import com.replica.simple.domain.PetPair;
+
+public interface ReadOneUseCase {
+    PetPair readOneUseCase(long id);
 }

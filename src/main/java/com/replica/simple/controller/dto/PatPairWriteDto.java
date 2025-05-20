@@ -1,10 +1,9 @@
 package com.replica.simple.controller.dto;
 
-import com.replica.simple.domain.PatPairImage;
-import com.replica.simple.domain.PetPair;
-import com.replica.simple.domain.PetPairStatus;
+import com.replica.simple.controller.dto.PatPairImageDto.ResponsePatPairImage;
 
 import java.time.Instant;
+import java.util.List;
 
 public class PatPairWriteDto {
 
@@ -21,10 +20,22 @@ public class PatPairWriteDto {
             String url,
             String content,
             String mapUrl,
-            String telNumber
+            String telNumber,
+            List<ResponsePatPairImage> images
     ) {}
 
     public record CreateResponsePetPair(
-            PetPair petPair
+            Long petFairId,
+            String title,
+            String posterImageUrl,
+            Instant startDate,
+            Instant endDate,
+            String simpleAddress,
+            String detailAddress,
+            String url,
+            String content,
+            String mapUrl,
+            String telNumber,
+            List<ResponsePatPairImage> images
     ) {}
 }

@@ -4,14 +4,7 @@ public class PatPairImageDto {
 
     private PatPairImageDto() {}
 
-    public record ReadPatPairImage(
-             long petFairImageId,
-             String imageUrl,
-             int sortOrder
-    ) {}
-
-    public record CreatePatPairImage(
-            long petFairImageId,
+    public record ResponsePatPairImage(
             String imageUrl,
             int sortOrder
     ) {}

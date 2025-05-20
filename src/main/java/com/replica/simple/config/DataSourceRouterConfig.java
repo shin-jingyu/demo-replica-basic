@@ -20,7 +20,6 @@ public class DataSourceRouterConfig {
     public DataSource routingDataSource() {
         DataSource master = props.getMaster().initializeDataSourceBuilder().build();
         DataSource replica = props.getReplica().initializeDataSourceBuilder().build();
-
         RoutingDataSource routing = new RoutingDataSource();
         Map<Object, Object> targets = new HashMap<>();
         targets.put("master", master);
